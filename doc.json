@@ -1,0 +1,137 @@
+{
+  "name": "OmeggaBucks",
+  "description": "A persistent currency system for your Omegga server, allowing players to check, pay, and request in-game currency.",
+  "author": "Inxects",
+  "version": "2.0.0",
+  "url": "https://github.com/Inxects1/omeggabucks",
+  "config": {
+    "default_starting_balance": {
+      "type": "number",
+      "default": 0,
+      "description": "The amount of currency new players start with."
+    },
+    "currency_name": {
+      "type": "string",
+      "default": "Bucks",
+      "description": "The name of the currency (e.g., 'Coins', 'Credits'). Will be pluralized automatically (e.g., 'Bucks', 'Coins')."
+    }
+  },
+  "commands": [
+    {
+      "name": "!balance",
+      "description": "Checks your current currency balance.",
+      "example": "!balance",
+      "args": []
+    },
+    {
+      "name": "!pay",
+      "description": "Sends currency to another player by name or temporary ID.",
+      "example": "!pay \"Player Name\" 50 For a job or !pay 42 25 For stuff",
+      "args": [
+        {
+          "name": "target",
+          "description": "The name or temporary 2-digit ID of the player to pay. Use quotes for names with spaces.",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "description": "The amount of currency to send.",
+          "required": true
+        },
+        {
+          "name": "reason",
+          "description": "Optional: A reason for the payment.",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "!request",
+      "description": "Requests currency from another player by name or temporary ID.",
+      "example": "!request \"Other Player\" 25 For materials or !request 05 10 For a brick",
+      "args": [
+        {
+          "name": "target",
+          "description": "The name or temporary 2-digit ID of the player to request from. Use quotes for names with spaces.",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "description": "The amount of currency to request.",
+          "required": true
+        },
+        {
+          "name": "reason",
+          "description": "Optional: A reason for the request.",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "!id",
+      "description": "Displays your temporary in-game ID.",
+      "example": "!id",
+      "args": []
+    },
+    {
+      "name": "!bucks",
+      "description": "Admin command to manage currency balances. Use !bucks for a list of admin subcommands.",
+      "example": "!bucks add \"Player Name\" 100 For reason",
+      "args": [
+        {
+          "name": "subcommand",
+          "description": "The action to perform (check, add, remove, set, setupbrick).",
+          "required": true
+        },
+        {
+          "name": "...",
+          "description": "Arguments for the subcommand. See individual command for details.",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "!bucks setupbrick",
+      "description": "Admin command: Designates a brick at specific coordinates as an interactive shop or ATM. Get coordinates from the brick's properties.",
+      "example": "!bucks setupbrick 0 0 0 shop item_name 100 or !bucks setupbrick 50 20 10 atm-give 50 or !bucks setupbrick 0 0 0 remove",
+      "args": [
+        {
+          "name": "x",
+          "description": "The X coordinate of the brick.",
+          "required": true
+        },
+        {
+          "name": "y",
+          "description": "The Y coordinate of the brick.",
+          "required": true
+        },
+        {
+          "name": "z",
+          "description": "The Z coordinate of the brick.",
+          "required": true
+        },
+        {
+          "name": "type",
+          "description": "The type of interactive brick (shop, atm-give, atm-take, remove).",
+          "required": true
+        },
+        {
+          "name": "param1",
+          "description": "Item ID for 'shop', amount for 'atm-give/take'.",
+          "required": false
+        },
+        {
+          "name": "param2",
+          "description": "Price for 'shop' (optional for other types).",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "!interact",
+      "description": "Used with a Touch Component on an interactive brick to activate its function. Players should NOT type this directly.",
+      "example": "(Set a brick's Touch Component: On Touched -> Execute Command -> !interact)",
+      "args": []
+    }
+  ]
+}
